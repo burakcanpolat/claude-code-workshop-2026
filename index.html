@@ -1890,7 +1890,7 @@ Unlit is the neutral grey state.
             <li>Start a new session: <span class="keys"><span class="kbd">Cmd+N</span><span class="sep">/</span><span class="kbd">Ctrl+N</span></span>.</li>
             <li>Environment: choose <strong>Local</strong>.</li>
             <li>Folder: choose <code>VeloMax-Workshop</code>. <strong>Not</strong> the CRM subfolder. The whole kit.</li>
-            <li>Model: leave whatever your plan gave you. Models are unit 2.4.</li>
+            <li>Model: pick Sonnet 5 if your list has it; it is fast and enough for everything in Block 1. Leave effort on high, the default, and never pick xhigh by hand. Models are unit 2.4.</li>
             <li>Permission mode: open the mode selector (<span class="keys"><span class="kbd">Cmd+Shift+M</span><span class="sep">/</span><span class="kbd">Ctrl+Shift+M</span></span>), read what it says right now, then select <strong>Manual</strong>.</li>
             <li>Do not type anything. The session is set up.</li>
           </ol>
@@ -2026,8 +2026,10 @@ Unlit is the neutral grey state.
           <div class="callout callout--warn" role="note">
             <span class="callout-label">If it goes wrong</span>
             The most likely problem is an answer that is too long. That is a real behavior of newer
-            models: ask for three bullets rather than lowering anything. If a permission prompt
-            appears, click <strong>Reject</strong>; permissions are the next unit.
+            models: ask for three bullets rather than lowering anything. In Manual a permission
+            prompt appears before every terminal command, even for listing or reading files. Read
+            the command; if it only reads, click Allow for this one time, not for the whole
+            session. Permissions are the next unit.
           </div>
           <div class="refjump"><span class="rj-label">Reference</span><a href="#r3">R3 How Claude works</a></div>
         </div>
@@ -2130,7 +2132,7 @@ Unlit is the neutral grey state.
           </div>
 
           <ol class="steps">
-            <li>In a throwaway copy of the folder, in <strong>Manual</strong>, paste <strong>P3</strong> and send.
+            <li>In the same folder, in <strong>Manual</strong>, paste <strong>P3</strong> and send. Manual is the safety net: nothing lands without you.
 <div class="code-block" data-prompt-id="P3">
   <div class="code-head">
     <span class="code-label"><span class="pre">P3</span><span class="lbl-text">The deliberately bad prompt</span></span>
@@ -2139,7 +2141,7 @@ Unlit is the neutral grey state.
   <div class="code-body" id="p3">Reorganise everything in here, fix all the problems, rename files sensibly and make it all consistent.</div>
 </div>
             </li>
-            <li>Let it run about twenty seconds, then press <strong>Esc</strong>. The response stops and the work so far is kept.</li>
+            <li>Watch the first two or three tool calls, then press <strong>Esc</strong>. If a permission prompt appears first (it wants to move or rename files), do not allow it: that prompt is the brake working. Never switch to Accept edits here.</li>
             <li>Clear the conversation.
 <div class="code-block">
   <div class="code-head">
@@ -2225,7 +2227,7 @@ Unlit is the neutral grey state.
   <div class="code-body" id="p6">Rewrite client-email.txt to be under 120 words, keep the numbers in paragraph 2 exactly as they are, match the tone of approved-proposal.txt, and list what you changed at the end.</div>
 </div>
             </li>
-            <li>Paste <strong>P7</strong> as its own message, on its own, and send.
+            <li>Clear the conversation (<code>/clear</code>) so the questions are real, then send <strong>P5</strong> and <strong>P7</strong> together as one message: two lines, one send.
 <div class="code-block" data-prompt-id="P7">
   <div class="code-head">
     <span class="code-label"><span class="pre">P7</span><span class="lbl-text">Interview me</span></span>
@@ -2234,7 +2236,7 @@ Unlit is the neutral grey state.
   <div class="code-body" id="p7">Before you start, interview me: ask me the three questions you need answered.</div>
 </div>
             </li>
-            <li>On the next message, state the task in one line: a short note to the VeloMax sales lead about the state of the pipeline. Answer its questions briefly in the same box.</li>
+            <li>Answer its three questions in one numbered message, for example: 1. The reader is the client's procurement lead. 2. The goal is a yes on the revised offer this week. 3. Keep every number as it is and do not mention a discount. Then read the rewrite in the diff and Accept or Reject it.</li>
           </ol>
 
           <p class="seeit"><span class="seeit-label">You should see</span> A perfectly reasonable rewrite from P5 where every decision was made for you silently. From P6: under 120 words, the three numbers in paragraph 2 untouched, and a list of changes at the bottom. From P7: three questions, and Claude waiting.</p>
@@ -2245,8 +2247,8 @@ Unlit is the neutral grey state.
           <div class="callout callout--warn" role="note">
             <span class="callout-label">If it goes wrong</span>
             If it asks five questions instead of three, take the five. If it asks nothing and just
-            does the work, send P7 again <strong>as its own message</strong> before you state the
-            task, not as a prefix on the same line.
+            does the work, the two lines were probably read as one sentence: send them again as
+            two separate lines of one message.
           </div>
           <div class="refjump"><span class="rj-label">Reference</span><a href="#r5">R5 Writing a request</a></div>
         </div>
@@ -2947,6 +2949,7 @@ Always name the files you used.</div>
           </div>
 
           <ol class="steps">
+            <li>Stay in the session you opened for the second <code>CLAUDE.md</code> run. It already holds a few files, so the ring has something to show.</li>
             <li>Click the <strong>usage ring</strong> next to the model picker and read both sides.</li>
             <li>Ask the app what is filling the window.
 <div class="code-block">
@@ -2963,7 +2966,7 @@ Always name the files you used.</div>
     <span class="code-label"><span class="pre">P16</span><span class="lbl-text">Write handoff.md</span></span>
     <button class="copy-btn" type="button" data-copy="p16" aria-label="Copy P16"><svg class="ico" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 5V3a1 1 0 011-1h7a1 1 0 011 1v7a1 1 0 01-1 1h-2M3 5h7a1 1 0 011 1v7a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4"/></svg><span class="lbl">copy</span></button>
   </div>
-  <div class="code-body" id="p16">Before we stop: write handoff.md in this folder with three short sections. What we did today. Where things stand right now, including any file you changed. What the next session should do first. Keep it under 20 lines.</div>
+  <div class="code-body" id="p16">Before we stop: write handoff.md at the top level of this folder, next to CLAUDE.md, with three short sections. What we did today. Where things stand right now, including any file you changed. What the next session should do first. Keep it under 20 lines.</div>
 </div>
             </li>
             <li>Paste <strong>P17</strong> and send, then click the usage ring again and look at the difference.
@@ -3032,7 +3035,9 @@ Always name the files you used.</div>
           </div>
 
           <ol class="steps">
-            <li>Make sure your session is on the <code>VeloMax-Workshop</code> root folder, so <code>dashboard/data_snapshot</code> is in scope.</li>
+            <li>Clear the conversation (<code>/clear</code>); no new session is needed.</li>
+            <li><strong>Switch the mode selector to Accept edits</strong> (<span class="keys"><span class="kbd">Cmd+Shift+M</span><span class="sep">/</span><span class="kbd">Ctrl+Shift+M</span></span>). From here on edits land and you read them in the diff pane; commands still ask. The mode is remembered per folder, so set it back to Manual when you repeat this at home.</li>
+            <li>Make sure your session is on the <code>VeloMax-Workshop</code> root folder, so <code>dashboard/data_snapshot</code> is in scope. The helpers use the session's model; Sonnet 5 is the right model for reading.</li>
             <li>Open the <strong>Tasks pane</strong> from the Views menu <strong>before</strong> you send.</li>
             <li>Paste <strong>P18</strong> and send.
 <div class="code-block" data-prompt-id="P18">
@@ -3193,7 +3198,7 @@ Always name the files you used.</div>
           </div>
           <div class="callout callout--warn" role="note">
             <span class="callout-label">If it goes wrong</span>
-            If the skill is not in the <code>/</code> menu, start a new session on the same folder.
+            The <code>.claude</code> folder is hidden: in Finder press <strong>Cmd+Shift+. to see it</strong>, or trust the <code>/</code> menu. If the skill is not in the <code>/</code> menu, start a new session on the same folder.
             If it is still missing, invoke it by describing the job instead. If the output invents a
             number, read the instruction line that forbids it out loud: that is the skill being
             debugged in public.
