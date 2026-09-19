@@ -2889,7 +2889,7 @@ Unlit is the neutral grey state.
     <span class="code-label"><span class="pre">P15</span><span class="lbl-text">Create the four-line CLAUDE.md</span></span>
     <button class="copy-btn" type="button" data-copy="p15" aria-label="Copy P15"><svg class="ico" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 5V3a1 1 0 011-1h7a1 1 0 011 1v7a1 1 0 01-1 1h-2M3 5h7a1 1 0 011 1v7a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4"/></svg><span class="lbl">copy</span></button>
   </div>
-  <div class="code-body" id="p15">Create a file called CLAUDE.md in this folder containing exactly these four lines and nothing else:
+  <div class="code-body" id="p15">Create a file called CLAUDE.md at the top level of this folder, next to notes.txt (not inside templates), containing exactly these four lines and nothing else:
 Respond in English, formal tone.
 Format currency as EUR with German number formatting (1.234,56 EUR).
 Never modify the CSV or JSON files; propose changes in a separate file.
@@ -2906,7 +2906,7 @@ Always name the files you used.</div>
             <span>Step 4 is the lesson. The file is read at the start of a session, so staying in the first conversation would have changed nothing at all.</span>
           </div>
           <div class="callout callout--warn" role="note">
-            <span class="callout-label">If it goes wrong</span>
+            <span class="callout-label">If it goes wrong</span> <strong>Location is the contract.</strong> A CLAUDE.md is read at session start only from the top level of the session folder. A copy inside a subfolder (for example templates/) loads only while Claude works on files in that subfolder, so it changes nothing here. If the file landed in the wrong place, ask for it at the top level next to notes.txt, then start a new session.
             If run two looks like run one, you are still in the old session. Press
             <span class="keys"><span class="kbd">Cmd+N</span><span class="sep">/</span><span class="kbd">Ctrl+N</span></span>
             and try again. If the output is still long, add one more line to the file:
