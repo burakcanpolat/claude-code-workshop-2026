@@ -3404,7 +3404,7 @@ Always name the files you used.</div>
     <span class="code-label"><span class="pre">P26</span><span class="lbl-text">The ultracode audit launch</span></span>
     <button class="copy-btn" type="button" data-copy="p26" aria-label="Copy P26"><svg class="ico" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 5V3a1 1 0 011-1h7a1 1 0 011 1v7a1 1 0 01-1 1h-2M3 5h7a1 1 0 011 1v7a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4"/></svg><span class="lbl">copy</span></button>
   </div>
-  <div class="code-body" id="p26">ultracode: audit the six monthly snapshots in dashboard/data_snapshot from four angles (data quality, sales trend, pipeline risk, sales-rep performance) and write audit.html with one section per angle and a one-page executive summary.</div>
+  <div class="code-body" id="p26">ultracode: audit the six monthly snapshots in dashboard/data_snapshot from four angles (data quality, sales trend, pipeline risk, sales-rep performance) and write audit.html with one section per angle and a one-page executive summary. Run the four sweeps on Sonnet 5 at medium effort, the verification pass on Sonnet 5 at high, and only the final synthesis on Opus 5 at high. Keep my conversation clean: agents return short structured findings, never raw file contents or tool output.</div>
 </div>
             </li>
             <li>Look at the workflow view for twenty seconds. Then stop narrating it.</li>
@@ -3417,6 +3417,14 @@ Always name the files you used.</div>
             use meaningfully more tokens than working through the same task in conversation." On
             Pro you have to switch workflows on first, from the Dynamic workflows row in
             <code>/config</code>. If you type ultracode on Pro and nothing happens, that is why.
+          </div>
+
+          <div class="callout" role="note">
+            <span class="callout-label">Trainer's trick</span>
+            Three levers you keep even when the workflow decides its own shape: which model each
+            stage runs on (reading is cheap and parallel, judgment is expensive and single), how
+            hard each stage thinks (effort per job), and what comes back into your own window
+            (short findings, never raw output). Say them in the prompt and the orchestrator obeys.
           </div>
 
           <p class="seeit"><span class="seeit-label">You should see</span> The workflow view opening, agents appearing as the sweep phase starts, and the chat still usable while it runs.</p>
