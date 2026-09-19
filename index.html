@@ -3037,19 +3037,19 @@ Always name the files you used.</div>
             <li>Paste <strong>P18</strong> and send.
 <div class="code-block" data-prompt-id="P18">
   <div class="code-head">
-    <span class="code-label"><span class="pre">P18</span><span class="lbl-text">Use a subagent to compare six monthly snapshots</span></span>
+    <span class="code-label"><span class="pre">P18</span><span class="lbl-text">Two subagents in parallel, one combined answer</span></span>
     <button class="copy-btn" type="button" data-copy="p18" aria-label="Copy P18"><svg class="ico" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 5V3a1 1 0 011-1h7a1 1 0 011 1v7a1 1 0 01-1 1h-2M3 5h7a1 1 0 011 1v7a1 1 0 01-1 1H3a1 1 0 01-1-1V6a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4"/></svg><span class="lbl">copy</span></button>
   </div>
-  <div class="code-body" id="p18">Use a subagent to compare the six monthly snapshots in dashboard/data_snapshot and report only what changed between months, as a short table. Do not change any file.</div>
+  <div class="code-body" id="p18">Run two subagents in parallel and do not read the data yourself. Subagent one: compare the six monthly snapshots in dashboard/data_snapshot and report what changed between months, as a short table. Subagent two: from 01_CRM_Rennradhersteller/kunden.csv and sales_transactions.csv, name the three customers whose 2025 purchases dropped most versus 2024, with the numbers. When both are back, give me one answer: each report in its own section, then two sentences on what they have in common. Do not change any file.</div>
 </div>
             </li>
             <li>When it finishes, read the summary in your conversation, then click the usage ring.</li>
           </ol>
 
-          <p class="seeit"><span class="seeit-label">You should see</span> A row appearing in the Tasks pane, running for a minute or two with the file reads happening inside it, then a compact month-over-month table in a conversation that is still short.</p>
+          <p class="seeit"><span class="seeit-label">You should see</span> Two rows appearing in the Tasks pane at the same time, each running for a minute or two with its file reads inside it, then one answer with two sections and a two-sentence link between them in a conversation that is still short.</p>
           <div class="demo-hint">
             <span class="hint-tag">Watching only</span>
-            <span>Notice that the Tasks pane fills with work while the conversation stays almost empty, and that only a table came back.</span>
+            <span>Notice that the Tasks pane fills with two jobs while the conversation stays almost empty, and that only two short reports came back.</span>
           </div>
           <div class="callout callout--warn" role="note">
             <span class="callout-label">If it goes wrong</span>
