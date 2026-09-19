@@ -3143,7 +3143,7 @@ Unlit is the neutral grey state; nothing is hidden, it is only quiet.
 <div id="chrome-num"></div>
 <div id="chrome-track"><span id="chrome-fill"></span></div>
 <div id="units"><h2>Units</h2><div class="ucols"></div><p class="uhint">Click a row to jump. Esc closes.</p></div>
-<div id="ctrlbar"><button type="button" data-cb="prev">Prev</button><button type="button" data-cb="next">Next</button><span class="cb-sep"></span><button type="button" data-cb="ov">Overview</button><button type="button" data-cb="units">Units</button></div>
+<div id="ctrlbar"><button type="button" tabindex="-1" data-cb="prev">Prev</button><button type="button" tabindex="-1" data-cb="next">Next</button><span class="cb-sep"></span><button type="button" tabindex="-1" data-cb="ov">Overview</button><button type="button" tabindex="-1" data-cb="units">Units</button></div>
 </div>
 </div>
 <div id="notes"><h3>Speaker notes</h3><div class="nt"></div><div class="nb"></div></div>
@@ -3329,6 +3329,7 @@ Unlit is the neutral grey state; nothing is hidden, it is only quiet.
     var b = ev.target.closest ? ev.target.closest('button[data-cb]') : null;
     if (!b) return;
     ev.stopPropagation();
+    if (b.blur) b.blur();
     var a = b.getAttribute('data-cb');
     if (a === 'prev'){ closeOverlays(); prev(); }
     else if (a === 'next'){ closeOverlays(); next(); }
@@ -3347,15 +3348,17 @@ Unlit is the neutral grey state; nothing is hidden, it is only quiet.
     stage.classList.toggle('no-chrome', s.hasAttribute('data-nochrome'));
     numEl.textContent = (cur + 1) + ' / ' + total;
     fillEl.style.width = ((cur + 1) / total * 100).toFixed(3) + '%';
-    syncNotes();
-    cdSync();
+    try { syncNotes(); } catch (err) {}
+    try { cdSync(); } catch (err) {}
     if (ovBuilt){
       var cells = overview.querySelectorAll('.ovcell');
       for (var k = 0; k < cells.length; k++) cells[k].classList.toggle('cur', k === cur);
     }
     if (push !== false){
       var want = '#' + (cur + 1);
-      if (location.hash !== want) history.replaceState(null, '', want);
+      try {
+        if (location.hash !== want) history.replaceState(null, '', want);
+      } catch (err) {}
     }
   }
 
@@ -3408,9 +3411,21 @@ Unlit is the neutral grey state; nothing is hidden, it is only quiet.
     }
   }
 
-  document.addEventListener('keydown', function(e){
+  function onKey(e){
+    if (e.__deck) return;
+    e.__deck = 1;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target || {};
+    var tag = (t.tagName || '').toUpperCase();
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || t.isContentEditable) return;
     var k = e.key;
-    if (k === 'Escape'){
+    var c = e.keyCode || e.which;
+    if (!k || k === 'Unidentified'){
+      k = ({ 27:'Escape', 39:'ArrowRight', 37:'ArrowLeft', 32:' ', 34:'PageDown',
+             33:'PageUp', 36:'Home', 35:'End', 78:'n', 66:'b', 85:'u', 84:'t',
+             82:'r', 191:'/' })[c] || '';
+    }
+    if (k === 'Escape' || c === 27){
       e.preventDefault();
       if (unitsPanel.classList.contains('on')){ unitsPanel.classList.remove('on'); }
       else if (overview.classList.contains('on')){ overview.classList.remove('on'); }
@@ -3418,10 +3433,12 @@ Unlit is the neutral grey state; nothing is hidden, it is only quiet.
       else { buildOverview(); scaleMinis(); overview.classList.add('on'); }
       return;
     }
-    if (k === 'ArrowRight' || k === ' ' || k === 'Spacebar' || k === 'PageDown'){ e.preventDefault(); closeOverlays(); next(); return; }
-    if (k === 'ArrowLeft' || k === 'PageUp'){ e.preventDefault(); closeOverlays(); prev(); return; }
-    if (k === 'Home'){ e.preventDefault(); closeOverlays(); show(0); return; }
-    if (k === 'End'){ e.preventDefault(); closeOverlays(); show(total - 1); return; }
+    if (k === 'ArrowRight' || k === 'Right' || k === ' ' || k === 'Spacebar' || k === 'PageDown'
+        || c === 39 || c === 32 || c === 34){ e.preventDefault(); closeOverlays(); next(); return; }
+    if (k === 'ArrowLeft' || k === 'Left' || k === 'PageUp' || c === 37 || c === 33){
+      e.preventDefault(); closeOverlays(); prev(); return; }
+    if (k === 'Home' || c === 36){ e.preventDefault(); closeOverlays(); show(0); return; }
+    if (k === 'End' || c === 35){ e.preventDefault(); closeOverlays(); show(total - 1); return; }
     if (k === 'n' || k === 'N'){ e.preventDefault(); notesPanel.classList.toggle('on'); return; }
     if (k === 'b' || k === 'B'){ e.preventDefault(); blank.classList.toggle('on'); return; }
     if (k === 'u' || k === 'U'){ e.preventDefault();
@@ -3430,7 +3447,12 @@ Unlit is the neutral grey state; nothing is hidden, it is only quiet.
     if (k === 't' || k === 'T'){ e.preventDefault(); cdToggle(); return; }
     if (k === 'r' || k === 'R'){ e.preventDefault(); cdReset(); return; }
     if (k === '?' || (k === '/' && e.shiftKey)){ e.preventDefault(); overview.classList.remove('on'); unitsPanel.classList.remove('on'); help.classList.toggle('on'); return; }
-  });
+  }
+  /* Capture on window first: the event is caught whatever inside the page
+     holds focus, and before anything else can stop it. The document copy is
+     the fallback for hosts that retarget; onKey ignores the second visit. */
+  window.addEventListener('keydown', onKey, true);
+  document.addEventListener('keydown', onKey, true);
 
   document.getElementById('viewport').addEventListener('click', function(e){
     if (e.target.closest && e.target.closest('#ctrlbar')) return;
@@ -3453,6 +3475,14 @@ Unlit is the neutral grey state; nothing is hidden, it is only quiet.
   window.addEventListener('hashchange', function(){ fromHash(); });
 
   wake();
+  try { window.focus(); } catch (err) {}
+  document.body.setAttribute('tabindex', '-1');
+  document.body.style.outline = 'none';
+  try { document.body.focus(); } catch (err) {}
+  window.addEventListener('click', function(){
+    var a = document.activeElement;
+    if (a && a !== document.body && a.blur) a.blur();
+  });
   slides[0].classList.add('active');
   if (!fromHash()) show(0);
   else show(cur, false);
